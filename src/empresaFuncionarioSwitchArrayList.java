@@ -26,7 +26,7 @@ public class empresaFuncionarioSwitchArrayList {
                         while (funcionario.get(i).equalsIgnoreCase("")) {
                             funcionario.set(i, JOptionPane.showInputDialog("Nome invalido! Informe um nome valido:").toUpperCase());
                         }
-                        sexo.add(JOptionPane.showInputDialog("Informe o sexo do funcionario " + funcionario.get(i)).toUpperCase());
+                        sexo.add(JOptionPane.showInputDialog("Informe o sexo do funcionario " + funcionario.get(funcionario.size() - 1)).toUpperCase());
                         while (sexo.get(i).equals("")) {
                             sexo.set(i, JOptionPane.showInputDialog("Sexo invalido! Informe um argumento valido! ").toUpperCase());
                         }
@@ -82,6 +82,10 @@ public class empresaFuncionarioSwitchArrayList {
 
                 case 5:
                     encerrarProg = JOptionPane.showInputDialog("TEM CERTEZA QUE DESEJA SAIR? S/N");
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Informe uma opção valida!");
             }
         }while (encerrarProg.equalsIgnoreCase("N"));
     }
