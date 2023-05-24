@@ -1,0 +1,119 @@
+// exercicio biblioteca
+
+import javax.swing.*;
+import java.util.ArrayList;
+
+public class bibliotecaModeloFinal {
+    public static void main(String[] args) {
+        ArrayList<String> nomeLivro = new ArrayList<>();
+        ArrayList<String> nomeAutor = new ArrayList<>();
+        ArrayList<Integer> dataPubLivro = new ArrayList<>();
+        String encerrarProg = "N";
+
+        do {
+            int operador = Integer.parseInt(JOptionPane.showInputDialog("Oque deseja fazer?\n\n" + "1 - CADASTRAR NOVOS LIVROS\n" +
+                    "2 - VISUALIZAR LIVROS CADASTRADOS\n" +
+                    "3 - PESQUISAR LIVROS POR NOME\n" +
+                    "4 - REMOVER LIVRO CADASTRADO\n" +
+                    "5 - ENCERRAR PROGRAMA"));
+
+            switch (operador) {
+
+                case 1:
+                    int qtdLivros = Integer.parseInt(JOptionPane.showInputDialog("Quantos livros serão cadastrados?"));
+                    for (int i = 0; i < qtdLivros; i++) {
+                        nomeLivro.add(JOptionPane.showInputDialog("Informe o titulo do livro " + (i+1) + " :").toUpperCase());
+                        while (nomeLivro.get(i).equalsIgnoreCase("")) {
+                            nomeLivro.set(i, JOptionPane.showInputDialog("Informe um titulo valido!"));
+                        }
+                        nomeAutor.add(JOptionPane.showInputDialog("Informe o autor do livro " + nomeLivro.get(nomeLivro.size() -1)).toUpperCase());
+                        while (nomeAutor.get(i).equalsIgnoreCase("")) {
+                            nomeAutor.set(i, JOptionPane.showInputDialog("Informe um nome valido para o autor!").toUpperCase());
+                        }
+                        dataPubLivro.add(Integer.parseInt(JOptionPane.showInputDialog("Informe a data de publicação do livro " + nomeLivro.get(i).toUpperCase())));
+                        while (dataPubLivro.get(i) > 2023) {
+                            dataPubLivro.set(i,  Integer.parseInt(JOptionPane.showInputDialog("Informe uma data valida!")));
+                        }
+                    }
+                    break;
+
+                case 2:
+                    String displayLivros = "Livros cadastrados:\n\n\n";
+                    for (int j = 0; j < nomeLivro.size(); j++) {
+                        displayLivros += "Nome do livro: " + nomeLivro.get(j) +"\n";
+                        displayLivros += "Nome do autor: " + nomeAutor.get(j) + "\n";
+                        displayLivros += "Data de publicação: " + dataPubLivro.get(j) + "\n\n";
+                    }
+                    JOptionPane.showMessageDialog(null, displayLivros);
+                    break;
+
+                case 3:
+                    int input = Integer.parseInt(JOptionPane.showInputDialog("Por qual caracteristica desejas procurar?\n\n" +
+                            "1 - NOME\n" +
+                            "2 - AUTOR\n" +
+                            "3 - DATA DE PUBLICAÇÃO"));
+
+                        if (input == 1) {
+                            String busca = JOptionPane.showInputDialog("Informe o nome do livro que desejas procurar").toUpperCase();
+                            String resultBusca = "Resultados:\n\n";
+                                for (int k = 0; k < nomeLivro.size(); k++) {
+                                    if (nomeLivro.get(k).contains(busca)) {
+                                        resultBusca += "Nome: " + nomeLivro.get(k) +"\n";
+                                        resultBusca += "Autor: " + nomeAutor.get(k) +"\n";
+                                        resultBusca += "Pubicação: " + dataPubLivro.get(k) +"\n\n";
+                                    }
+                                }
+                                JOptionPane.showMessageDialog(null, resultBusca);
+                        } else if (input == 2) {
+                            String busca = JOptionPane.showInputDialog("Informe o nome do autor que desejas procurar").toUpperCase();
+                            String resultBusca = "Resultados:\n\n";
+                                for (int k = 0; k < nomeLivro.size(); k++) {
+                                    if (nomeLivro.get(k).contains(busca)) {
+                                        resultBusca += "Nome: " + nomeLivro.get(k) +"\n";
+                                        resultBusca += "Autor: " + nomeAutor.get(k) +"\n";
+                                        resultBusca += "Pubicação: " + dataPubLivro.get(k) +"\n\n";
+                                    }
+                                }
+                                JOptionPane.showMessageDialog(null, resultBusca);
+
+                        } else if (input == 3) {
+                            int busca = Integer.parseInt(JOptionPane.showInputDialog("Informe o ano que desejas procurar"));
+                            String resultBusca = "Resultados:\n\n";
+                                for (int k = 0; k < nomeLivro.size(); k++) {
+                                    if (dataPubLivro.get(k).equals(busca)) {
+                                        resultBusca += "Nome: " + nomeLivro.get(k) +"\n";
+                                        resultBusca += "Autor: " + nomeAutor.get(k) +"\n";
+                                        resultBusca += "Pubicação: " + dataPubLivro.get(k) +"\n\n";
+                                    }
+                                }
+                                JOptionPane.showMessageDialog(null, resultBusca);
+                        }
+
+
+                    break;
+
+                case 4:
+                    String[] livrosRemover = nomeLivro.toArray(new String[0]);
+                    int livroSelecionado = JOptionPane.showOptionDialog(null, "Qual livro desejas remover do sistema?\n\n", null, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, livrosRemover, livrosRemover[0]);
+
+                    if (livroSelecionado != JOptionPane.CLOSED_OPTION) {
+                        nomeLivro.remove(livroSelecionado);
+                        nomeAutor.remove(livroSelecionado);
+                        dataPubLivro.remove(livroSelecionado);
+                        JOptionPane.showMessageDialog(null, "Livro removido com sucesso!");
+                    }
+
+                    break;
+
+                case 5:
+                    encerrarProg = JOptionPane.showInputDialog("TEM CERTEZA QUE DESEJA SAIR? S/N");
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "OPÇÃO ESCOLHIDA INVALIDA!");
+            }
+
+        }while (encerrarProg.equalsIgnoreCase("N"));
+
+    }
+}
