@@ -1,0 +1,105 @@
+import javax.swing.*;
+import java.util.ArrayList;
+
+public class mercadoComArrayList {
+    public static void main(String[] args) {
+
+        ArrayList <String> produtos = new ArrayList<>();
+        ArrayList <Double> precos = new ArrayList<>();
+        String encerrar = "N";
+
+        do {
+            int input = Integer.parseInt(JOptionPane.showInputDialog("OQUE VOCE DESEJA FAZER?\n\n" +
+                    "1 - CADASTRAR NOVO PRODUTO AO ESTOQUE\n" +
+                    "2 - VISUALIZAR ESTOQUE\n" +
+                    "3 - EDITAR PRODUTO\n" +
+                    "4 - REMOVER PRODUTO\n" +
+                    "5 - COMPRAR\n" +
+                    "6 - SAIR"));
+
+            switch (input) {
+                case 1:
+                    int qtdProds = Integer.parseInt(JOptionPane.showInputDialog("Informe a quantidade de produtos que serão cadastrados:"));
+                        for (int i = 0; i < qtdProds; i++) {
+                            produtos.add(JOptionPane.showInputDialog("Informe o nome do produto " + (produtos.size()+1)).toUpperCase());
+                            while (produtos.get(i).equalsIgnoreCase("")) {
+                                produtos.set(i, JOptionPane.showInputDialog("PRODUTO INVALIDO! DIGITE NOVAMENTE").toUpperCase());
+                            }
+                            precos.add(Double.parseDouble(JOptionPane.showInputDialog("INFORME O PREÇO DO PRODUTO " + produtos.get(produtos.size()-1))));
+                        }
+                    break;
+
+                case 2:
+                    String displayProds = "PRODUTOS CADASTRADOS NO SISTEMA:\n";
+                        for (int i = 0; i < produtos.size(); i++) {
+                            displayProds +="COD " +(i+1) + " | " + produtos.get(i) + " | " + "R$" + precos.get(i) + "\n";
+
+                        }
+                    JOptionPane.showMessageDialog(null, displayProds);
+                    break;
+
+                case 3:
+                    String listaProdutos = "SELECIONE O PRODUTO :\n";
+                        for (int i = 0; i < produtos.size(); i++) {
+                            listaProdutos +="COD " +(i+1) + " | " + produtos.get(i) + " | " + "R$" + precos.get(i) + "\n";
+                        }
+                    int escolherProd = Integer.parseInt(JOptionPane.showInputDialog(listaProdutos));
+                        escolherProd--;
+
+                    int entradaEscolha = Integer.parseInt(JOptionPane.showInputDialog("OQUE VOCÊ PRENDER MUDAR:\n\n" +"PRODUTO: "+
+                            produtos.get(escolherProd) + " R$" + precos.get(escolherProd)+ "\n\n" + "1 - NOME | 2 - PREÇO"));
+
+                        if (entradaEscolha == 1) {
+                            produtos.set(escolherProd, JOptionPane.showInputDialog("INFORME O NOVO NOME").toUpperCase());
+                                JOptionPane.showMessageDialog(null, "NOME ALTERADO!");
+                        } else if (entradaEscolha == 2) {
+                            precos.set(escolherProd, Double.parseDouble(JOptionPane.showInputDialog("INFORME O NOVO PREÇO")));
+                                JOptionPane.showMessageDialog(null, "PREÇO ALTERADO!");
+                        }
+
+                    break;
+
+                case 4:
+                    String listaItems = "DIGITE O CODIGO DO PRODUTO QUE DESEJA REMOVER!\n\n";
+                        for (int i = 0; i < produtos.size(); i++) {
+                            listaItems +="COD " +(i+1) + " | " + produtos.get(i) + " | " + "R$" + precos.get(i) + "\n";
+                        }
+                    int entradaRemover = Integer.parseInt(JOptionPane.showInputDialog(listaItems));
+                        if (entradaRemover < produtos.size()) {
+                            produtos.remove(entradaRemover);
+                            precos.remove(entradaRemover);
+                            JOptionPane.showMessageDialog(null, "PRODUTO REMOVIDO COM SUCESSO!");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "CODIGO INVALIDO!!!");
+                        }
+
+                    break;
+
+                case 5:
+                    String carrinho = "PRODUTOS COMPRADOS\n\n";
+                    String sair = "N";
+                    double carrinhoDinheiro = 0;
+
+                        do {
+                            String listaProdsComprar = "DIGITE O CODIGO DO PRODUTO QUE DESEJA COMPRAR! (DIGITE SAIR PARA SAIR)\n\n";
+                                for (int i = 0; i < produtos.size(); i++) {
+                                    listaProdsComprar +="COD " +(i+1) + " | " + produtos.get(i) + " | " + "R$" + precos.get(i) + "\n";
+                                }
+                                String entradaComprador = JOptionPane.showInputDialog(listaProdsComprar);
+
+                                    if (entradaComprador.equalsIgnoreCase("SAIR")) {
+                                        sair = "S";
+                                    } else {
+                                        int indexadorCompra = Integer.parseInt(entradaComprador);
+                                        carrinho += "| " + produtos.get(indexadorCompra - 1) + " R$" + precos.get(indexadorCompra - 1) + "\n";
+                                        carrinhoDinheiro += precos.get(indexadorCompra - 1);
+                                    }
+
+                        }while (sair.equalsIgnoreCase("N"));
+                        JOptionPane.showMessageDialog(null,carrinho + "\n" + "TOTAL R$" + carrinhoDinheiro);
+                    break;
+            }
+        } while (encerrar.equalsIgnoreCase("n"));
+    }
+
+}
